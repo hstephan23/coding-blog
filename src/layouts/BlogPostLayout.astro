@@ -2,22 +2,31 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import { absoluteUrl } from '../utils/absoluteUrl';
+import { slugifyLanguage } from '../utils/languages';
 import { slugifyTag } from '../utils/tags';
+import { getReadingTime } from '../utils/posts';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, tags, image } = post.data;
+const { title, description, pubDate, tags, languages, image } = post.data;
 const dateLabel = pubDate.toLocaleDateString('en-US', {
 	year: 'numeric',
 	month: 'long',
 	day: 'numeric',
 });
+const readingTime = getReadingTime(post.body || '');
 const path = `/blog/${post.id}/`;
 const site = Astro.site ?? new URL('https://example.com');
 const postUrl = new URL(path, site).href;
+const defaultOgPath =
+	(import.meta.env.PUBLIC_OG_IMAGE as string | undefined)?.trim() ||
+	'/apple-touch-icon.png';
+const schemaImage = image
+	? absoluteUrl(site, image)
+	: absoluteUrl(site, defaultOgPath);
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -25,7 +34,7 @@ const jsonLd = {
 	description,
 	datePublished: pubDate.toISOString(),
 	url: postUrl,
-	...(image ? { image: absoluteUrl(site, image) } : {}),
+	image: schemaImage,
 };
 
 const giscusRepo = import.meta.env.PUBLIC_GISCUS_REPO as string | undefined;
@@ -54,7 +63,20 @@ const showGiscus =
 			<h1>{title}</h1>
 			<p class="post-meta">
 				<time datetime={pubDate.toISOString()}>{dateLabel}</time>
+				{' · '}
+				<span>{readingTime}</span>
 			</p>
+			{
+				languages.length > 0 ? (
+					<ul class="tags languages" aria-label="Languages">
+						{languages.map((lang) => (
+							<li>
+								<a href={`/languages/${slugifyLanguage(lang)}/`}>{lang}</a>
+							</li>
+						))}
+					</ul>
+				) : null
+			}
 			{
 				tags.length > 0 ? (
 					<ul class="tags" aria-label="Tags">
@@ -68,6 +90,9 @@ const showGiscus =
 			}
 		</header>
 		<slot />
+		<footer class="post-footer">
+			<a href="/">&larr; Back to posts</a>
+		</footer>
 		{
 			showGiscus ? (
 				<section class="giscus" aria-label="Comments">
@@ -104,5 +129,10 @@ const showGiscus =
 	.giscus-heading {
 		font-size: 1.125rem;
 		margin: 0 0 1rem;
+	}
+	.post-footer {
+		margin-top: 3rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border, #e5e5e5);
 	}
 </style>

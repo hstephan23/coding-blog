@@ -23,17 +23,31 @@ const {
 const site = Astro.site ?? new URL('https://example.com');
 const canonical =
 	canonicalPath != null ? new URL(canonicalPath, site).href : undefined;
+const defaultOgPath =
+	(import.meta.env.PUBLIC_OG_IMAGE as string | undefined)?.trim() ||
+	'/apple-touch-icon.png';
 const ogImage =
-	image != null && image !== '' ? absoluteUrl(site, image) : undefined;
+	image != null && image !== ''
+		? absoluteUrl(site, image)
+		: absoluteUrl(site, defaultOgPath);
 const rssHref = new URL('/rss.xml', site).pathname;
+const currentPath = Astro.url.pathname;
+
+function isCurrent(path: string) {
+	if (path === '/') {
+		return currentPath === '/' || currentPath === '';
+	}
+	return currentPath.startsWith(path);
+}
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -45,14 +59,14 @@ const rssHref = new URL('/rss.xml', site).pathname;
 		) : null}
 		{canonical ? <meta property="og:url" content={canonical} /> : null}
 		<meta property="og:type" content={ogType} />
-		<meta property="og:site_name" content="Code blog" />
-		{ogImage ? <meta property="og:image" content={ogImage} /> : null}
-		<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+		<meta property="og:site_name" content="The Calm Developer" />
+		<meta property="og:image" content={ogImage} />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		{description ? (
 			<meta name="twitter:description" content={description} />
 		) : null}
-		{ogImage ? <meta name="twitter:image" content={ogImage} /> : null}
+		<meta name="twitter:image" content={ogImage} />
 		{
 			jsonLd != null ? (
 				<script
@@ -69,14 +83,21 @@ const rssHref = new URL('/rss.xml', site).pathname;
 		<header class="site-header">
 			<div class="site-inner">
 				<p class="site-title">
-					<a href="/">Code blog</a>
+					<a href="/">The Calm Developer</a>
 				</p>
 				<nav class="site-nav" aria-label="Main">
-					<a href="/">Posts</a>
+					<a href="/" class={isCurrent('/') ? 'active' : ''}>Posts</a>
 					{' · '}
-					<a href="/tags/">Tags</a>
+					<a href="/tags/" class={isCurrent('/tags/') ? 'active' : ''}>Tags</a>
 					{' · '}
-					<a href="/search/">Search</a>
+					<a
+						href="/languages/"
+						class={isCurrent('/languages/') ? 'active' : ''}>Languages</a
+					>
+					{' · '}
+					<a href="/search/" class={isCurrent('/search/') ? 'active' : ''}
+						>Search</a
+					>
 					{' · '}
 					<a href={rssHref}>RSS</a>
 				</nav>

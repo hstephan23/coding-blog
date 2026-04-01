@@ -99,6 +99,12 @@ a:hover {
 	font-size: 0.95rem;
 }
 
+.site-nav a.active {
+	font-weight: 700;
+	color: var(--text);
+	text-decoration: none;
+}
+
 main {
 	padding: 1.5rem 1.25rem 3rem;
 }
@@ -188,33 +194,48 @@ main {
 }
 
 .prose :where(h2, h3, h4) {
-	margin-top: 1.75rem;
-	margin-bottom: 0.5rem;
-	font-weight: 600;
+	margin-top: 2.5rem;
+	margin-bottom: 1rem;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
+.prose hr {
+	border: 0;
+	border-top: 1px solid var(--border);
+	margin: 3rem 0;
+}
+
+.prose blockquote {
+	margin: 1.5rem 0;
+	padding-left: 1.25rem;
+	border-left: 4px solid var(--link);
+	color: var(--muted);
+	font-style: italic;
 }
 
 .prose :where(p, ul, ol) {
-	margin: 0.75rem 0;
+	margin: 1.25rem 0;
 }
 
 .prose :where(ul, ol) {
-	padding-left: 1.25rem;
+	padding-left: 1.5rem;
 }
 
 .prose pre {
-	margin: 1rem 0;
-	padding: 1rem;
+	margin: 1.5rem 0;
+	padding: 1.25rem;
 	border-radius: 0.5rem;
 	overflow-x: auto;
-	font-size: 0.875rem;
-	line-height: 1.5;
+	font-size: 0.9rem;
+	line-height: 1.6;
 	border: 1px solid var(--border);
 }
 
 .prose :not(pre) > code {
-	font-size: 0.9em;
-	padding: 0.12em 0.35em;
-	border-radius: 0.25rem;
+	font-size: 0.85em;
+	padding: 0.2em 0.4em;
+	border-radius: 0.35rem;
 	background: var(--code-bg);
 	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
 }
@@ -223,4 +244,5 @@ main {
 	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
 	background: none;
 	padding: 0;
+	font-size: 1em;
 }

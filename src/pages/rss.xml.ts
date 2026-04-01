@@ -13,7 +13,7 @@ export const GET: APIRoute = async (context) => {
 	const posts = await getPublishedPosts();
 
 	return rss({
-		title: 'Code blog',
+		title: 'The Calm Developer',
 		description: 'Notes and snippets with syntax-highlighted code.',
 		site,
 		items: posts.map((post) => ({
@@ -21,6 +21,8 @@ export const GET: APIRoute = async (context) => {
 			pubDate: post.data.pubDate,
 			description: post.data.description,
 			link: `/blog/${post.id}/`,
+			content: post.body,
 		})),
+		customData: `<language>en-us</language>`,
 	});
 };
