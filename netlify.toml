@@ -1,8 +1,11 @@
 # Build settings for Netlify. Set SITE_URL in the Netlify UI (Site settings → Environment)
 # to your production origin, e.g. https://yourdomain.com (no trailing slash).
 #
-# Vercel: import repo, set Output Directory to dist (vercel.json sets build/output).
-# Cloudflare Pages: build command npm run build, output dist, Node 22, SITE_URL in env.
+# Deploy previews: each PR gets a preview URL automatically. Optionally add
+# SITE_URL = $DEPLOY_PRIME_URL (or leave unset and accept example.com in previews only).
+#
+# Vercel: import repo; vercel.json sets build/output. PR previews are on by default.
+# Cloudflare Pages: build npm run build, output dist, Node 22, SITE_URL in env.
 
 [build]
 command = "npm run build"

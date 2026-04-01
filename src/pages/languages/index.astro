@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../utils/posts';
+import {
+	collectLanguageSlugsFromPosts,
+	displayLanguageForSlug,
+	postsForLanguageSlug,
+} from '../../utils/languages';
+
+const posts = await getPublishedPosts();
+const slugs = collectLanguageSlugsFromPosts(posts);
+const languagesWithCounts = slugs.map((slug) => ({
+	slug,
+	label: displayLanguageForSlug(slug, posts),
+	count: postsForLanguageSlug(slug, posts).length,
+}));
+---
+
+<BaseLayout
+	title="Languages"
+	description="Browse posts by programming language or runtime."
+	canonicalPath="/languages/"
+>
+	<div class="site-inner">
+		<h1 class="page-heading">Languages</h1>
+		{
+			languagesWithCounts.length === 0 ? (
+				<p>No languages yet. Add a <code>languages</code> list to post frontmatter.</p>
+			) : (
+				<ul class="language-index">
+					{languagesWithCounts.map(({ slug, label, count }) => (
+						<li>
+							<a href={`/languages/${slug}/`}>{label}</a>
+							<span class="language-count"> ({count})</span>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</div>
+</BaseLayout>
+
+<style>
+	.page-heading {
+		margin: 0 0 1rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.language-index {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.language-index li {
+		margin-bottom: 0.5rem;
+	}
+	.language-count {
+		color: var(--muted, #666);
+		font-size: 0.9em;
+	}
+</style>

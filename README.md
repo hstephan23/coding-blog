@@ -1,4 +1,4 @@
-# Code blog
+# The Calm Developer
 
 File-based posts (Markdown and MDX) with Astro 6, Zod-validated frontmatter, Shiki syntax highlighting, and an RSS feed.
 
@@ -28,10 +28,11 @@ Published URLs look like `/blog/<id>/` (with `trailingSlash: 'always'` in [`astr
 
 ## Site URL and RSS
 
-Set your production origin so canonical links and RSS item URLs are correct:
+Set your production origin so canonical links, the sitemap, and RSS item URLs are correct:
 
-- **Option A:** Edit `site` in [`astro.config.mjs`](astro.config.mjs) (default is `https://example.com`).
-- **Option B:** Set `SITE_URL` when building, for example `SITE_URL=https://myblog.dev npm run build`.
+- **Option A:** Set `SITE_URL` in the host environment (recommended). See [`.env.example`](.env.example) for all optional build-time and `PUBLIC_*` variables.
+- **Option B:** Set `SITE_URL` when building locally, for example `SITE_URL=https://myblog.dev npm run build`.
+- **Option C:** Change the default `site` value in [`astro.config.mjs`](astro.config.mjs).
 
 ## Deploying
 
@@ -41,4 +42,4 @@ Build output is static files in **`dist/`**. Point any static host at that folde
 
 **Vercel:** Import the repo; framework preset can stay “Other” or “Astro” if detected. Build `npm run build`, output `dist`. Set `SITE_URL` in project environment variables to your deployment URL.
 
-After the first deploy, update `SITE_URL` / `site` to the real domain so RSS and canonical tags stay accurate.
+After the first deploy, set `SITE_URL` to the real domain so RSS, sitemap, and canonical tags stay accurate. **Pull request previews:** Netlify, Vercel, and Cloudflare Pages create preview URLs per PR; enable them in the host UI if you want CI-green builds checked on a live URL before merge.

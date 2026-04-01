@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { slugifyLanguage } from '../utils/languages';
 import { getPublishedPosts } from '../utils/posts';
 
 const posts = await getPublishedPosts();
 ---
 
 <BaseLayout
-	title="Code blog"
+	title="The Calm Developer"
 	description="Notes and snippets with syntax-highlighted code."
 	canonicalPath="/"
 >
@@ -28,6 +29,15 @@ const posts = await getPublishedPosts();
 								})}
 							</time>
 						</p>
+						{post.data.languages.length > 0 ? (
+							<ul class="post-languages" aria-label="Languages">
+								{post.data.languages.map((lang) => (
+									<li>
+										<a href={`/languages/${slugifyLanguage(lang)}/`}>{lang}</a>
+									</li>
+								))}
+							</ul>
+						) : null}
 						<p class="post-excerpt">{post.data.description}</p>
 					</li>
 				))
@@ -41,5 +51,17 @@ const posts = await getPublishedPosts();
 		margin: 0 0 0.5rem;
 		font-size: 1.5rem;
 		font-weight: 700;
+	}
+	.post-languages {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0.75rem;
+		margin: 0.35rem 0 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.85rem;
+	}
+	.post-languages a {
+		color: var(--muted, #666);
 	}
 </style>

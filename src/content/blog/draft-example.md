@@ -4,6 +4,8 @@ description: Set draft true to hide from production builds and RSS.
 pubDate: 2026-04-10
 tags:
   - draft
+languages:
+  - TypeScript
 draft: true
 ---
 

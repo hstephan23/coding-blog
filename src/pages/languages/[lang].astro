@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../utils/posts';
+import {
+	collectLanguageSlugsFromPosts,
+	displayLanguageForSlug,
+	postsForLanguageSlug,
+} from '../../utils/languages';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const slugs = collectLanguageSlugsFromPosts(posts);
+	return slugs.map((lang) => ({
+		params: { lang },
+		props: { lang },
+	}));
+}
+
+interface Props {
+	lang: string;
+}
+
+const { lang } = Astro.props;
+const posts = await getPublishedPosts();
+const label = displayLanguageForSlug(lang, posts);
+const languagePosts = postsForLanguageSlug(lang, posts);
+const path = `/languages/${lang}/`;
+---
+
+<BaseLayout
+	title={`Language: ${label}`}
+	description={`Posts featuring ${label}.`}
+	canonicalPath={path}
+>
+	<div class="site-inner">
+		<h1 class="page-heading">
+			Language: <span class="language-label">{label}</span>
+		</h1>
+		<p class="back">
+			<a href="/languages/">All languages</a>
+		</p>
+		{
+			languagePosts.length === 0 ? (
+				<p>No posts for this language.</p>
+			) : (
+				<ul class="post-list">
+					{languagePosts.map((post) => (
+						<li>
+							<h2>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</h2>
+							<p class="post-meta">
+								<time datetime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric',
+									})}
+								</time>
+							</p>
+							<p class="post-excerpt">{post.data.description}</p>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</div>
+</BaseLayout>
+
+<style>
+	.page-heading {
+		margin: 0 0 0.5rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.language-label {
+		font-weight: 600;
+	}
+	.back {
+		margin: 0 0 1.5rem;
+	}
+	.post-meta {
+		margin: 0.25rem 0;
+		color: var(--muted, #666);
+		font-size: 0.9rem;
+	}
+	.post-excerpt {
+		margin: 0.5rem 0 0;
+	}
+</style>

@@ -5,6 +5,8 @@ pubDate: 2026-03-28
 tags:
   - rust
   - syntax-highlighting
+languages:
+  - Rust
 ---
 
 Rust’s `Result` type maps cleanly to fallible operations:

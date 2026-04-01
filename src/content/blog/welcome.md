@@ -1,10 +1,12 @@
 ---
-title: Welcome to the code blog
+title: Welcome to The Calm Developer
 description: File-based posts with Markdown, syntax highlighting, and optional MDX.
 pubDate: 2026-03-15
 tags:
   - meta
   - astro
+languages:
+  - TypeScript
 ---
 
 This site uses **Astro Content Collections**: each post is a `.md` or `.mdx` file under `src/content/blog/`. Frontmatter is validated with Zod at build time.
