@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../utils/posts';
+import {
+	collectTagSlugsFromPosts,
+	displayTagForSlug,
+	postsForTagSlug,
+} from '../../utils/tags';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const slugs = collectTagSlugsFromPosts(posts);
+	return slugs.map((tag) => ({
+		params: { tag },
+		props: { tag },
+	}));
+}
+
+interface Props {
+	tag: string;
+}
+
+const { tag } = Astro.props;
+const posts = await getPublishedPosts();
+const label = displayTagForSlug(tag, posts);
+const taggedPosts = postsForTagSlug(tag, posts);
+const path = `/tags/${tag}/`;
+---
+
+<BaseLayout
+	title={`Tag: ${label}`}
+	description={`Posts tagged “${label}”.`}
+	canonicalPath={path}
+>
+	<div class="site-inner">
+		<h1 class="page-heading">
+			Tag: <span class="tag-label">{label}</span>
+		</h1>
+		<p class="back">
+			<a href="/tags/">All tags</a>
+		</p>
+		{
+			taggedPosts.length === 0 ? (
+				<p>No posts with this tag.</p>
+			) : (
+				<ul class="post-list">
+					{taggedPosts.map((post) => (
+						<li>
+							<h2>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</h2>
+							<p class="post-meta">
+								<time datetime={post.data.pubDate.toISOString()}>
+									{post.data.pubDate.toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric',
+									})}
+								</time>
+							</p>
+							<p class="post-excerpt">{post.data.description}</p>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</div>
+</BaseLayout>
+
+<style>
+	.page-heading {
+		margin: 0 0 0.5rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.tag-label {
+		font-weight: 600;
+	}
+	.back {
+		margin: 0 0 1.5rem;
+	}
+	.post-meta {
+		margin: 0.25rem 0;
+		color: var(--muted, #666);
+		font-size: 0.9rem;
+	}
+	.post-excerpt {
+		margin: 0.5rem 0 0;
+	}
+</style>

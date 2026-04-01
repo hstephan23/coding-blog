@@ -1,0 +1,226 @@
+:root {
+	color-scheme: light dark;
+	--bg: light-dark(#fafafa, #121212);
+	--text: light-dark(#1a1a1a, #e8e8e8);
+	--muted: light-dark(#5c5c5c, #a3a3a3);
+	--link: light-dark(#0b5fff, #6ea8ff);
+	--border: light-dark(#e0e0e0, #333);
+	--code-bg: light-dark(#f0f0f0, #1e1e1e);
+	--max: 42rem;
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		Roboto,
+		Utopia,
+		sans-serif;
+	line-height: 1.6;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	background: var(--bg);
+	color: var(--text);
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+}
+
+.skip-link {
+	position: absolute;
+	left: -9999px;
+	z-index: 999;
+	padding: 0.5rem 1rem;
+	background: var(--text);
+	color: var(--bg);
+	font-weight: 600;
+}
+
+.skip-link:focus {
+	left: 1rem;
+	top: 1rem;
+	outline: 2px solid var(--link);
+	outline-offset: 2px;
+}
+
+a {
+	color: var(--link);
+	text-decoration-thickness: 0.06em;
+	text-underline-offset: 0.2em;
+}
+
+a:hover {
+	text-decoration-thickness: 0.12em;
+}
+
+.site-header,
+.site-footer {
+	padding: 1rem 1.25rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.site-footer {
+	border-bottom: none;
+	border-top: 1px solid var(--border);
+	margin-top: 3rem;
+	font-size: 0.9rem;
+	color: var(--muted);
+}
+
+.site-inner {
+	max-width: var(--max);
+	margin: 0 auto;
+}
+
+.site-title {
+	margin: 0;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.site-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.site-title a:hover {
+	text-decoration: underline;
+}
+
+.site-nav {
+	margin-top: 0.35rem;
+	font-size: 0.95rem;
+}
+
+main {
+	padding: 1.5rem 1.25rem 3rem;
+}
+
+.post-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.post-list li {
+	padding: 1rem 0;
+	border-bottom: 1px solid var(--border);
+}
+
+.post-list li:first-child {
+	padding-top: 0;
+}
+
+.post-list h2 {
+	margin: 0 0 0.35rem;
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+
+.post-list h2 a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.post-list h2 a:hover {
+	text-decoration: underline;
+}
+
+.post-meta {
+	font-size: 0.9rem;
+	color: var(--muted);
+	margin: 0;
+}
+
+.post-excerpt {
+	margin: 0.5rem 0 0;
+	color: var(--muted);
+	font-size: 0.95rem;
+}
+
+/* Prose + Shiki (astro wraps fenced blocks) */
+.prose {
+	max-width: var(--max);
+	margin: 0 auto;
+}
+
+.prose > header {
+	margin-bottom: 2rem;
+}
+
+.prose > header h1 {
+	margin: 0 0 0.5rem;
+	font-size: 1.75rem;
+	line-height: 1.25;
+	font-weight: 700;
+}
+
+.prose .tags {
+	list-style: none;
+	padding: 0;
+	margin: 0.75rem 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.prose .tags li {
+	font-size: 0.8rem;
+	padding: 0.15rem 0.5rem;
+	border-radius: 999px;
+	background: var(--code-bg);
+}
+
+.prose .tags li a {
+	color: var(--link);
+	text-decoration: none;
+}
+
+.prose .tags li a:hover {
+	text-decoration: underline;
+}
+
+.prose :where(h2, h3, h4) {
+	margin-top: 1.75rem;
+	margin-bottom: 0.5rem;
+	font-weight: 600;
+}
+
+.prose :where(p, ul, ol) {
+	margin: 0.75rem 0;
+}
+
+.prose :where(ul, ol) {
+	padding-left: 1.25rem;
+}
+
+.prose pre {
+	margin: 1rem 0;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	overflow-x: auto;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	border: 1px solid var(--border);
+}
+
+.prose :not(pre) > code {
+	font-size: 0.9em;
+	padding: 0.12em 0.35em;
+	border-radius: 0.25rem;
+	background: var(--code-bg);
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+}
+
+.prose pre code {
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+	background: none;
+	padding: 0;
+}

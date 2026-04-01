@@ -1,0 +1,18 @@
+---
+title: MDX in the same collection
+description: This entry is .mdx so you can mix Markdown with components later.
+pubDate: 2026-04-01
+tags:
+  - mdx
+---
+
+MDX files live beside Markdown in the `blog` collection. You can import components when you need interactive or repeated UI—keep islands scoped so the rest of the page stays static.
+
+```js
+// Example fence inside MDX
+export function greet(name) {
+	return `Hello, ${name}`;
+}
+```
+
+For now this post is plain prose plus fences; add React/Vue/Svelte via `astro add` when you want client-side widgets.

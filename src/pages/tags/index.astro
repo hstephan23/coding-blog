@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../utils/posts';
+import {
+	collectTagSlugsFromPosts,
+	displayTagForSlug,
+	postsForTagSlug,
+} from '../../utils/tags';
+
+const posts = await getPublishedPosts();
+const slugs = collectTagSlugsFromPosts(posts);
+const tagsWithCounts = slugs.map((slug) => ({
+	slug,
+	label: displayTagForSlug(slug, posts),
+	count: postsForTagSlug(slug, posts).length,
+}));
+---
+
+<BaseLayout
+	title="Tags"
+	description="Browse posts by tag."
+	canonicalPath="/tags/"
+>
+	<div class="site-inner">
+		<h1 class="page-heading">Tags</h1>
+		{
+			tagsWithCounts.length === 0 ? (
+				<p>No tags yet.</p>
+			) : (
+				<ul class="tag-index">
+					{tagsWithCounts.map(({ slug, label, count }) => (
+						<li>
+							<a href={`/tags/${slug}/`}>{label}</a>
+							<span class="tag-count"> ({count})</span>
+						</li>
+					))}
+				</ul>
+			)
+		}
+	</div>
+</BaseLayout>
+
+<style>
+	.page-heading {
+		margin: 0 0 1rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.tag-index {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.tag-index li {
+		margin-bottom: 0.5rem;
+	}
+	.tag-count {
+		color: var(--muted, #666);
+		font-size: 0.9em;
+	}
+</style>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../utils/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout
+	title="Code blog"
+	description="Notes and snippets with syntax-highlighted code."
+	canonicalPath="/"
+>
+	<div class="site-inner">
+		<h1 class="home-heading">Posts</h1>
+		<ul class="post-list">
+			{
+				posts.map((post) => (
+					<li>
+						<h2>
+							<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						</h2>
+						<p class="post-meta">
+							<time datetime={post.data.pubDate.toISOString()}>
+								{post.data.pubDate.toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric',
+								})}
+							</time>
+						</p>
+						<p class="post-excerpt">{post.data.description}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</BaseLayout>
+
+<style>
+	.home-heading {
+		margin: 0 0 0.5rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+</style>

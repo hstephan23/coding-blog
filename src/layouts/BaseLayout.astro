@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+import { absoluteUrl } from '../utils/absoluteUrl';
+
+interface Props {
+	title: string;
+	description?: string;
+	canonicalPath?: string;
+	/** Full URL or root-relative path for social previews. */
+	image?: string;
+	ogType?: 'website' | 'article';
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+	title,
+	description,
+	canonicalPath,
+	image,
+	ogType = 'website',
+	jsonLd,
+} = Astro.props;
+const site = Astro.site ?? new URL('https://example.com');
+const canonical =
+	canonicalPath != null ? new URL(canonicalPath, site).href : undefined;
+const ogImage =
+	image != null && image !== '' ? absoluteUrl(site, image) : undefined;
+const rssHref = new URL('/rss.xml', site).pathname;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		{description ? <meta name="description" content={description} /> : null}
+		{canonical ? <link rel="canonical" href={canonical} /> : null}
+		<meta property="og:title" content={title} />
+		{description ? (
+			<meta property="og:description" content={description} />
+		) : null}
+		{canonical ? <meta property="og:url" content={canonical} /> : null}
+		<meta property="og:type" content={ogType} />
+		<meta property="og:site_name" content="Code blog" />
+		{ogImage ? <meta property="og:image" content={ogImage} /> : null}
+		<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+		<meta name="twitter:title" content={title} />
+		{description ? (
+			<meta name="twitter:description" content={description} />
+		) : null}
+		{ogImage ? <meta name="twitter:image" content={ogImage} /> : null}
+		{
+			jsonLd != null ? (
+				<script
+					is:inline
+					type="application/ld+json"
+					set:html={JSON.stringify(jsonLd)}
+				/>
+			) : null
+		}
+		<link rel="alternate" type="application/rss+xml" title="RSS" href={rssHref} />
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Skip to content</a>
+		<header class="site-header">
+			<div class="site-inner">
+				<p class="site-title">
+					<a href="/">Code blog</a>
+				</p>
+				<nav class="site-nav" aria-label="Main">
+					<a href="/">Posts</a>
+					{' · '}
+					<a href="/tags/">Tags</a>
+					{' · '}
+					<a href="/search/">Search</a>
+					{' · '}
+					<a href={rssHref}>RSS</a>
+				</nav>
+			</div>
+		</header>
+		<main id="main-content">
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="site-inner">
+				Built with Astro · <a href={rssHref}>Subscribe via RSS</a>
+			</div>
+		</footer>
+	</body>
+</html>

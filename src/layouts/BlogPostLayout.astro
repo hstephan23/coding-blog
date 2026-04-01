@@ -1,0 +1,108 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { absoluteUrl } from '../utils/absoluteUrl';
+import { slugifyTag } from '../utils/tags';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, tags, image } = post.data;
+const dateLabel = pubDate.toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+const path = `/blog/${post.id}/`;
+const site = Astro.site ?? new URL('https://example.com');
+const postUrl = new URL(path, site).href;
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description,
+	datePublished: pubDate.toISOString(),
+	url: postUrl,
+	...(image ? { image: absoluteUrl(site, image) } : {}),
+};
+
+const giscusRepo = import.meta.env.PUBLIC_GISCUS_REPO as string | undefined;
+const giscusRepoId = import.meta.env.PUBLIC_GISCUS_REPO_ID as string | undefined;
+const giscusCategoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID as
+	| string
+	| undefined;
+const giscusCategory =
+	(import.meta.env.PUBLIC_GISCUS_CATEGORY as string | undefined) ?? 'Comments';
+const showGiscus =
+	Boolean(giscusRepo) &&
+	Boolean(giscusRepoId) &&
+	Boolean(giscusCategoryId);
+---
+
+<BaseLayout
+	title={title}
+	description={description}
+	canonicalPath={path}
+	image={image}
+	ogType="article"
+	jsonLd={jsonLd}
+>
+	<article class="prose">
+		<header>
+			<h1>{title}</h1>
+			<p class="post-meta">
+				<time datetime={pubDate.toISOString()}>{dateLabel}</time>
+			</p>
+			{
+				tags.length > 0 ? (
+					<ul class="tags" aria-label="Tags">
+						{tags.map((t) => (
+							<li>
+								<a href={`/tags/${slugifyTag(t)}/`}>{t}</a>
+							</li>
+						))}
+					</ul>
+				) : null
+			}
+		</header>
+		<slot />
+		{
+			showGiscus ? (
+				<section class="giscus" aria-label="Comments">
+					<h2 class="giscus-heading">Comments</h2>
+					<script
+						is:inline
+						src="https://giscus.app/client.js"
+						data-repo={giscusRepo}
+						data-repo-id={giscusRepoId}
+						data-category={giscusCategory}
+						data-category-id={giscusCategoryId}
+						data-mapping="pathname"
+						data-strict="0"
+						data-reactions-enabled="1"
+						data-emit-metadata="0"
+						data-input-position="bottom"
+						data-theme="preferred_color_scheme"
+						data-lang="en"
+						crossorigin="anonymous"
+						async
+					/>
+				</section>
+			) : null
+		}
+	</article>
+</BaseLayout>
+
+<style>
+	.giscus {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border, #e5e5e5);
+	}
+	.giscus-heading {
+		font-size: 1.125rem;
+		margin: 0 0 1rem;
+	}
+</style>

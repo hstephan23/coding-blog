@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Search"
+	description="Full-text search across posts."
+	canonicalPath="/search/"
+>
+	<div class="site-inner">
+		<h1 class="page-heading">Search</h1>
+		{
+			import.meta.env.DEV ? (
+				<p class="hint">
+					The Pagefind index is generated after{' '}
+					<code>npm run build</code>. Run <code>npm run preview</code> to try
+					search locally.
+				</p>
+			) : (
+				<>
+					<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+					<div id="search" />
+				</>
+			)
+		}
+	</div>
+</BaseLayout>
+
+{!import.meta.env.DEV ? (
+	<script is:inline type="module">
+		import { PagefindUI } from '/pagefind/pagefind-ui.js';
+
+		new PagefindUI({
+			element: '#search',
+			showSubResults: true,
+		});
+	</script>
+) : null}
+
+<style>
+	.page-heading {
+		margin: 0 0 1rem;
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.hint {
+		line-height: 1.6;
+	}
+	.hint code {
+		font-size: 0.95em;
+	}
+</style>
