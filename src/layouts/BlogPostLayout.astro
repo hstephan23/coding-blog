@@ -5,13 +5,15 @@ import BaseLayout from './BaseLayout.astro';
 import { absoluteUrl } from '../utils/absoluteUrl';
 import { slugifyLanguage } from '../utils/languages';
 import { slugifyTag } from '../utils/tags';
-import { getReadingTime } from '../utils/posts';
+import { getReadingTime, getRelatedPosts, getPublishedPosts } from '../utils/posts';
 
 interface Props {
 	post: CollectionEntry<'blog'>;
 }
 
 const { post } = Astro.props;
+const allPosts = await getPublishedPosts();
+const relatedPosts = getRelatedPosts(post, allPosts);
 const { title, description, pubDate, tags, languages, image } = post.data;
 const dateLabel = pubDate.toLocaleDateString('en-US', {
 	year: 'numeric',
@@ -115,6 +117,27 @@ const showGiscus =
 			<a href="/">&larr; Back to posts</a>
 		</footer>
 		{
+			relatedPosts.length > 0 ? (
+				<section class="related-posts" aria-labelledby="related-heading">
+					<h2 id="related-heading">Related Posts</h2>
+					<ul class="related-list">
+						{relatedPosts.map((rp) => (
+							<li class="related-item">
+								<a href={`/blog/${rp.id}/`}>{rp.data.title}</a>
+								<time datetime={rp.data.pubDate.toISOString()}>
+									{rp.data.pubDate.toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'short',
+										day: 'numeric',
+									})}
+								</time>
+							</li>
+						))}
+					</ul>
+				</section>
+			) : null
+		}
+		{
 			showGiscus ? (
 				<section class="giscus" aria-label="Comments">
 					<h2 class="giscus-heading">Comments</h2>
@@ -161,5 +184,39 @@ const showGiscus =
 		margin-top: 3rem;
 		padding-top: 1.5rem;
 		border-top: 1px solid var(--border, #e5e5e5);
+	}
+	.related-posts {
+		margin-top: 2rem;
+		padding: 1.5rem;
+		background: var(--card-bg, #fafafa);
+		border-radius: 0.5rem;
+		border: 1px solid var(--border, #e5e5e5);
+	}
+	.related-posts h2 {
+		font-size: 1.25rem;
+		margin: 0 0 1rem;
+	}
+	.related-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 1rem;
+	}
+	.related-item {
+		display: flex;
+		flex-direction: column;
+	}
+	.related-item a {
+		font-weight: 600;
+		text-decoration: none;
+		color: var(--primary, #0066cc);
+	}
+	.related-item a:hover {
+		text-decoration: underline;
+	}
+	.related-item time {
+		font-size: 0.875rem;
+		color: var(--text-muted, #666);
 	}
 </style>
