@@ -1,7 +1,7 @@
 ---
-title: This is a draft
+title: "[DEMO] This is a draft"
 description: Set draft true to hide from production builds and RSS.
-pubDate: 2026-04-10
+pubDate: 2025-01-01
 tags:
   - draft
 languages:

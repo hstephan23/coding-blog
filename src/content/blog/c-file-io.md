@@ -1,7 +1,8 @@
 ---
 title: "[DEMO] File I/O in C - Reading and Writing Files"
 description: Learn how to interact with the file system in your C programs.
-pubDate: 2026-04-08
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - programming

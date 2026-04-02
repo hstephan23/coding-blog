@@ -1,7 +1,8 @@
 ---
-title: Welcome to The Calm Developer
+title: "[DEMO] Welcome to The Calm Developer"
 description: File-based posts with Markdown, syntax highlighting, and optional MDX.
-pubDate: 2026-03-15
+draft: true
+pubDate: 2025-01-01
 tags:
   - meta
   - astro

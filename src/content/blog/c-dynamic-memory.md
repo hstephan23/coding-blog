@@ -1,7 +1,8 @@
 ---
-title: Dynamic Memory Allocation - Deep Dive
+title: "[DEMO] Dynamic Memory Allocation - Deep Dive"
 description: Learn how to manage memory at runtime in C using malloc, free, and friends.
-pubDate: 2026-04-10
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - programming

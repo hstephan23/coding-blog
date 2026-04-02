@@ -1,7 +1,8 @@
 ---
 title: "[DEMO] C Loops - For, While, and Do-While"
 description: Master the art of repetition in C with loops.
-pubDate: 2026-04-03
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - programming

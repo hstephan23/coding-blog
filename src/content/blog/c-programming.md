@@ -1,7 +1,8 @@
 ---
 title: "[DEMO] Introduction to C Programming"
 description: Learn the fundamentals of C, a powerful and efficient low-level programming language.
-pubDate: 2026-04-01
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - systems

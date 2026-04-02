@@ -1,7 +1,8 @@
 ---
-title: Rust snippets that read well in a blog
+title: "[DEMO] Rust snippets that read well in a blog"
 description: fenced code blocks with language tags get proper highlighting.
-pubDate: 2026-03-28
+draft: true
+pubDate: 2025-01-01
 tags:
   - rust
   - syntax-highlighting

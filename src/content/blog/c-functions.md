@@ -1,7 +1,8 @@
 ---
 title: "[DEMO] Functions in C - Declaration, Definition, and Scope"
 description: Learn how to modularize your C code using functions.
-pubDate: 2026-04-04
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - programming

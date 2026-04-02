@@ -1,7 +1,8 @@
 ---
-title: The C Preprocessor - Macros and Header Files
+title: "[DEMO] The C Preprocessor - Macros and Header Files"
 description: Discover how the preprocessor transforms your C code before compilation.
-pubDate: 2026-04-09
+draft: true
+pubDate: 2025-01-01
 tags:
   - c
   - programming
