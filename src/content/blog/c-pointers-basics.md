@@ -1,5 +1,5 @@
 ---
-title: Pointers in C - The Basics
+title: "[DEMO] Pointers in C - The Basics"
 description: Unlock the power of C by understanding pointers and memory addresses.
 pubDate: 2026-04-06
 tags:

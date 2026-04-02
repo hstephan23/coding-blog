@@ -1,5 +1,5 @@
 ---
-title: Structures and Unions in C
+title: "[DEMO] Structures and Unions in C"
 description: Define your own custom data types in C using structures and unions.
 pubDate: 2026-04-07
 tags:

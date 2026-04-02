@@ -1,5 +1,5 @@
 ---
-title: Arrays and Strings in C
+title: "[DEMO] Arrays and Strings in C"
 description: Working with collections of data and text in C.
 pubDate: 2026-04-05
 tags:

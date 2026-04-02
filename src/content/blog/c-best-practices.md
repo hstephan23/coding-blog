@@ -1,5 +1,5 @@
 ---
-title: Common C Pitfalls and Best Practices
+title: "[DEMO] Common C Pitfalls and Best Practices"
 description: Avoid common mistakes and write cleaner C code.
 pubDate: 2026-04-11
 tags:

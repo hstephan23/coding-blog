@@ -1,5 +1,5 @@
 ---
-title: Getting Started with TypeScript and React
+title: "[DEMO] Getting Started with TypeScript and React"
 description: Learn how to use TypeScript with React to build more robust components and applications.
 pubDate: 2026-04-01
 tags:

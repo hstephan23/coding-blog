@@ -1,5 +1,5 @@
 ---
-title: C Control Flow - If-Else and Switch
+title: "[DEMO] C Control Flow - If-Else and Switch"
 description: Learn how to control the flow of your C programs using conditional statements.
 pubDate: 2026-04-02
 tags:
