@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "About Me";
+const description = "Learn more about the developer behind The Calm Developer blog.";
+---
+
+<BaseLayout title={title} description={description}>
+	<article class="prose">
+		<header>
+			<h1>About Me</h1>
+		</header>
+
+		<section>
+			<p>
+				Hello! I'm a software engineer passionate about building clean, efficient, and user-centric applications. 
+				With a focus on modern web technologies and a love for minimal design, I share my journey and 
+				learnings through this blog.
+			</p>
+		</section>
+
+		<section>
+			<h2>My Expertise</h2>
+			<ul>
+				<li><strong>Frontend Development:</strong> React, Astro, TypeScript, and modern CSS.</li>
+				<li><strong>Backend Systems:</strong> Node.js, Go, and PostgreSQL.</li>
+				<li><strong>Cloud & DevOps:</strong> AWS, Docker, and CI/CD pipelines.</li>
+				<li><strong>Software Architecture:</strong> Designing scalable and maintainable systems.</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>My Philosophy</h2>
+			<p>
+				I believe in the "calm developer" approach: writing code that is easy to read, simple to maintain, 
+				and focused on solving real problems without unnecessary complexity. Great software isn't just about 
+				the features—it's about the craftsmanship and the long-term health of the codebase.
+			</p>
+		</section>
+
+		<section>
+			<h2>Connect With Me</h2>
+			<p>
+				I'm always open to discussing new projects, interesting technologies, or just chatting about 
+				software development in general.
+			</p>
+			<ul>
+				<li><a href="https://github.com">GitHub</a></li>
+				<li><a href="https://linkedin.com">LinkedIn</a></li>
+				<li><a href="https://twitter.com">Twitter</a></li>
+				<li><a href="mailto:hello@example.com">Email Me</a></li>
+			</ul>
+		</section>
+	</article>
+</BaseLayout>
+
+<style>
+	section {
+		margin-bottom: 3rem;
+	}
+
+	h2 {
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 0.5rem;
+		margin-top: 3rem;
+	}
+
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+
+	ul li {
+		margin-bottom: 0.75rem;
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	ul li::before {
+		content: "→";
+		position: absolute;
+		left: 0;
+		color: var(--link);
+	}
+</style>
