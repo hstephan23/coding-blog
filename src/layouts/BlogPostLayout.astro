@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import { absoluteUrl } from '../utils/absoluteUrl';
 import { slugifyLanguage } from '../utils/languages';
@@ -24,9 +25,18 @@ const postUrl = new URL(path, site).href;
 const defaultOgPath =
 	(import.meta.env.PUBLIC_OG_IMAGE as string | undefined)?.trim() ||
 	'/apple-touch-icon.png';
-const schemaImage = image
-	? absoluteUrl(site, image)
-	: absoluteUrl(site, defaultOgPath);
+
+let schemaImage: string;
+if (image) {
+	if (typeof image === 'string') {
+		schemaImage = absoluteUrl(site, image);
+	} else {
+		schemaImage = absoluteUrl(site, image.src);
+	}
+} else {
+	schemaImage = absoluteUrl(site, defaultOgPath);
+}
+
 const jsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -88,6 +98,17 @@ const showGiscus =
 					</ul>
 				) : null
 			}
+			{
+				image && typeof image !== 'string' ? (
+					<Image
+						src={image}
+						alt={title}
+						class="post-image"
+						width={1200}
+						height={630}
+					/>
+				) : null
+			}
 		</header>
 		<slot />
 		<footer class="post-footer">
@@ -121,6 +142,12 @@ const showGiscus =
 </BaseLayout>
 
 <style>
+	.post-image {
+		width: 100%;
+		height: auto;
+		border-radius: 0.5rem;
+		margin: 1.5rem 0;
+	}
 	.giscus {
 		margin-top: 3rem;
 		padding-top: 2rem;

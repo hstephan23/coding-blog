@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 const blog = defineCollection({
 	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
-	schema: z.object({
+	schema: ({ image }) => z.object({
 		title: z.string(),
 		description: z.string(),
 		pubDate: z.coerce.date(),
@@ -15,7 +15,7 @@ const blog = defineCollection({
 		/** Optional URL segment; overrides the default id derived from the filename. */
 		slug: z.string().optional(),
 		/** Optional absolute URL or site-relative path for Open Graph / Twitter cards. */
-		image: z.string().optional(),
+		image: image().optional(),
 	}),
 });
 
