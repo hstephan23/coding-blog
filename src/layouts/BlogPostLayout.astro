@@ -70,12 +70,12 @@ const showGiscus =
 	ogType="article"
 	jsonLd={jsonLd}
 >
-	<article class="prose">
+	<article class="prose post-article">
 		<header>
+			<p class="eyebrow">Article</p>
 			<h1>{title}</h1>
 			<p class="post-meta">
 				<time datetime={pubDate.toISOString()}>{dateLabel}</time>
-				{' · '}
 				<span>{readingTime}</span>
 			</p>
 			{
@@ -92,9 +92,9 @@ const showGiscus =
 			{
 				tags.length > 0 ? (
 					<ul class="tags" aria-label="Tags">
-						{tags.map((t) => (
+						{tags.map((tag) => (
 							<li>
-								<a href={`/tags/${slugifyTag(t)}/`}>{t}</a>
+								<a href={`/tags/${slugifyTag(tag)}/`}>{tag}</a>
 							</li>
 						))}
 					</ul>
@@ -114,18 +114,18 @@ const showGiscus =
 		</header>
 		<slot />
 		<footer class="post-footer">
-			<a href="/">&larr; Back to posts</a>
+			<a class="text-link" href="/">Back to posts</a>
 		</footer>
 		{
 			relatedPosts.length > 0 ? (
 				<section class="related-posts" aria-labelledby="related-heading">
 					<h2 id="related-heading">Related Posts</h2>
 					<ul class="related-list">
-						{relatedPosts.map((rp) => (
+						{relatedPosts.map((relatedPost) => (
 							<li class="related-item">
-								<a href={`/blog/${rp.id}/`}>{rp.data.title}</a>
-								<time datetime={rp.data.pubDate.toISOString()}>
-									{rp.data.pubDate.toLocaleDateString('en-US', {
+								<a href={`/blog/${relatedPost.id}/`}>{relatedPost.data.title}</a>
+								<time datetime={relatedPost.data.pubDate.toISOString()}>
+									{relatedPost.data.pubDate.toLocaleDateString('en-US', {
 										year: 'numeric',
 										month: 'short',
 										day: 'numeric',
@@ -163,60 +163,3 @@ const showGiscus =
 		}
 	</article>
 </BaseLayout>
-
-<style>
-	.post-image {
-		width: 100%;
-		height: auto;
-		border-radius: 0.5rem;
-		margin: 1.5rem 0;
-	}
-	.giscus {
-		margin-top: 3rem;
-		padding-top: 2rem;
-		border-top: 1px solid var(--border, #e5e5e5);
-	}
-	.giscus-heading {
-		font-size: 1.125rem;
-		margin: 0 0 1rem;
-	}
-	.post-footer {
-		margin-top: 3rem;
-		padding-top: 1.5rem;
-		border-top: 1px solid var(--border, #e5e5e5);
-	}
-	.related-posts {
-		margin-top: 2rem;
-		padding: 1.5rem;
-		background: var(--card-bg, #fafafa);
-		border-radius: 0.5rem;
-		border: 1px solid var(--border, #e5e5e5);
-	}
-	.related-posts h2 {
-		font-size: 1.25rem;
-		margin: 0 0 1rem;
-	}
-	.related-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: 1rem;
-	}
-	.related-item {
-		display: flex;
-		flex-direction: column;
-	}
-	.related-item a {
-		font-weight: 600;
-		text-decoration: none;
-		color: var(--primary, #0066cc);
-	}
-	.related-item a:hover {
-		text-decoration: underline;
-	}
-	.related-item time {
-		font-size: 0.875rem;
-		color: var(--text-muted, #666);
-	}
-</style>

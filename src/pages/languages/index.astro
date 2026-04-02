@@ -22,16 +22,26 @@ const languagesWithCounts = slugs.map((slug) => ({
 	canonicalPath="/languages/"
 >
 	<div class="site-inner">
-		<h1 class="page-heading">Languages</h1>
+		<section class="page-intro surface-card">
+			<p class="eyebrow">Browse by stack</p>
+			<h1 class="page-heading">Languages</h1>
+			<p class="page-subtitle">
+				Explore the archive by language, runtime, and technical focus area.
+			</p>
+		</section>
 		{
 			languagesWithCounts.length === 0 ? (
-				<p>No languages yet. Add a <code>languages</code> list to post frontmatter.</p>
+				<div class="surface-card empty-state">
+					<p>No languages yet. Add a <code>languages</code> list to post frontmatter.</p>
+				</div>
 			) : (
-				<ul class="language-index">
+				<ul class="collection-grid">
 					{languagesWithCounts.map(({ slug, label, count }) => (
 						<li>
-							<a href={`/languages/${slug}/`}>{label}</a>
-							<span class="language-count"> ({count})</span>
+							<a class="collection-card" href={`/languages/${slug}/`}>
+								<span>{label}</span>
+								<span class="taxonomy-count">{count}</span>
+							</a>
 						</li>
 					))}
 				</ul>
@@ -39,23 +49,3 @@ const languagesWithCounts = slugs.map((slug) => ({
 		}
 	</div>
 </BaseLayout>
-
-<style>
-	.page-heading {
-		margin: 0 0 1rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-	.language-index {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.language-index li {
-		margin-bottom: 0.5rem;
-	}
-	.language-count {
-		color: var(--muted, #666);
-		font-size: 0.9em;
-	}
-</style>

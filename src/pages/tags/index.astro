@@ -22,16 +22,26 @@ const tagsWithCounts = slugs.map((slug) => ({
 	canonicalPath="/tags/"
 >
 	<div class="site-inner">
-		<h1 class="page-heading">Tags</h1>
+		<section class="page-intro surface-card">
+			<p class="eyebrow">Browse by topic</p>
+			<h1 class="page-heading">Tags</h1>
+			<p class="page-subtitle">
+				Group the archive by themes, ideas, and recurring subjects.
+			</p>
+		</section>
 		{
 			tagsWithCounts.length === 0 ? (
-				<p>No tags yet.</p>
+				<div class="surface-card empty-state">
+					<p>No tags yet.</p>
+				</div>
 			) : (
-				<ul class="tag-index">
+				<ul class="collection-grid">
 					{tagsWithCounts.map(({ slug, label, count }) => (
 						<li>
-							<a href={`/tags/${slug}/`}>{label}</a>
-							<span class="tag-count"> ({count})</span>
+							<a class="collection-card" href={`/tags/${slug}/`}>
+								<span>{label}</span>
+								<span class="taxonomy-count">{count}</span>
+							</a>
 						</li>
 					))}
 				</ul>
@@ -39,23 +49,3 @@ const tagsWithCounts = slugs.map((slug) => ({
 		}
 	</div>
 </BaseLayout>
-
-<style>
-	.page-heading {
-		margin: 0 0 1rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-	.tag-index {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.tag-index li {
-		margin-bottom: 0.5rem;
-	}
-	.tag-count {
-		color: var(--muted, #666);
-		font-size: 0.9em;
-	}
-</style>

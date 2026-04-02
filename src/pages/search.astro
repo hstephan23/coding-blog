@@ -8,18 +8,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	canonicalPath="/search/"
 >
 	<div class="site-inner">
-		<h1 class="page-heading">Search</h1>
+		<section class="page-intro surface-card">
+			<p class="eyebrow">Site search</p>
+			<h1 class="page-heading">Search the archive</h1>
+			<p class="page-subtitle">
+				Look through posts, notes, and snippets across the full blog.
+			</p>
+		</section>
 		{
 			import.meta.env.DEV ? (
-				<p class="hint">
-					The Pagefind index is generated after{' '}
-					<code>npm run build</code>. Run <code>npm run preview</code> to try
-					search locally.
-				</p>
+				<div class="notice-card">
+					<p>
+						The Pagefind index is generated after <code>npm run build</code>. Run
+						<code>npm run preview</code> to try search locally.
+					</p>
+				</div>
 			) : (
 				<>
 					<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-					<div id="search" />
+					<div class="search-shell">
+						<div id="search" />
+					</div>
 				</>
 			)
 		}
@@ -36,17 +45,3 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		});
 	</script>
 ) : null}
-
-<style>
-	.page-heading {
-		margin: 0 0 1rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-	.hint {
-		line-height: 1.6;
-	}
-	.hint code {
-		font-size: 0.95em;
-	}
-</style>

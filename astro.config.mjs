@@ -15,4 +15,23 @@ export default defineConfig({
 			theme: 'github-dark',
 		},
 	},
+	vite: {
+		build: {
+			rollupOptions: {
+				onwarn(warning, warn) {
+					const isAstroUnusedImportWarning =
+						warning.code === 'UNUSED_EXTERNAL_IMPORT' &&
+						warning.exporter === '@astrojs/internal-helpers/remote' &&
+						warning.message.includes('node_modules/astro/dist/assets/utils/index.js');
+
+					// Astro 6 currently emits this upstream warning during builds.
+					if (isAstroUnusedImportWarning) {
+						return;
+					}
+
+					warn(warning);
+				},
+			},
+		},
+	},
 });

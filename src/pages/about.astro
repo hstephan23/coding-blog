@@ -1,97 +1,82 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const title = "About Me";
-const description = "Learn more about the developer behind The Calm Developer blog.";
+const title = 'About Me';
+const description = 'Learn more about the developer behind The Calm Developer blog.';
 ---
 
-<BaseLayout title={title} description={description}>
-	<article class="prose">
-		<header>
-			<h1>About Me</h1>
-		</header>
-
-		<section>
-			<p>
-				Hello! I'm Harrison, a software engineer focused on building reliable, well-structured systems
-				and continuously improving my understanding of how software works under the hood.
-			</p>
-			<p>
-				I work primarily with C nowadays, but started my career in modern web technologies such
-				as a Typescript and React Frontend specialist. I am focused on always being better and learning
-				more.
-			</p>
-			<p>
-				I'm especially interested in learning more about memory and performance. I want to understand the
-				why and how and not just "sling code". Through this blog I hope to share what I am learning
-				and I hope to break down complex systems using AI to jumpstart my learning.
-			</p>
+<BaseLayout title={title} description={description} canonicalPath="/about/">
+	<div class="site-inner">
+		<section class="page-hero">
+			<div class="page-hero-copy surface-card">
+				<p class="eyebrow">About the author</p>
+				<h1 class="page-heading">
+					Building calm software starts with understanding what sits underneath the abstractions.
+				</h1>
+				<p class="page-subtitle">
+					I&apos;m Harrison, a software engineer focused on reliable systems, steady
+					frontend craftsmanship, and learning the machine-level details that make
+					software hold up over time.
+				</p>
+			</div>
+			<aside class="surface-card utility-card">
+				<p class="utility-label">Connect</p>
+				<p class="utility-copy">
+					I am always open to discussing software, systems, and interesting
+					engineering problems.
+				</p>
+				<div class="link-stack">
+					<a href="https://github.com/hstephan23">GitHub</a>
+					<a href="https://www.linkedin.com/in/harrison-stephan-software-engineer/">LinkedIn</a>
+					<a href="mailto:thecalmdeveloper@gmail.com">Email</a>
+				</div>
+			</aside>
 		</section>
 
-		<section>
-			<h2>My Expertise</h2>
-			<ul>
-				<li><strong>Systems & Low-Level Programming:</strong> C programming, memory management,
-				and performance-thinking</li>
-				<li><strong>Frontend Development:</strong> React, Typescript, and SCSS.</li>
-				<li><strong>Software Architecture:</strong> Designing scalable and maintainable systems.</li>
-			</ul>
-		</section>
-
-		<section>
-			<h2>Philosophy</h2>
-			<p>
-				I believe in being "the calm developer": writing code that is easy to read, simple to maintain,
-				and focused on solving real problems without unnecessary complexity. Great software isn't just about
-				the features—it's about the craftsmanship and the long-term health of the codebase.
-			</p>
-			<p>
-				For me, becoming a better engineer means diving deeper and understanding more. Understand the machine.
-				Understand the principles. And trust in your hard work.
-			</p>
-		</section>
-
-		<section>
-			<h2>Connect With Me</h2>
-			<p>
-				I'm always open to discussing new projects, interesting technologies, or just chatting about
-				software development in general.
-			</p>
-			<ul>
-				<li><a href="https://github.com/hstephan23">GitHub</a></li>
-				<li><a href="https://www.linkedin.com/in/harrison-stephan-software-engineer/">LinkedIn</a></li>
-				<li><a href="mailto:thecalmdeveloper@gmail.com">Email Me</a></li>
-			</ul>
-		</section>
-	</article>
+		<div class="info-grid">
+			<section class="surface-card info-card">
+				<p class="eyebrow">Background</p>
+				<h2 class="section-title">What I am focused on</h2>
+				<p>
+					I work primarily with C today, but I started my career in modern web
+					technologies as a TypeScript and React frontend specialist.
+				</p>
+				<p>
+					Lately I have been especially interested in memory, performance, and the
+					low-level reasons software behaves the way it does.
+				</p>
+			</section>
+			<section class="surface-card info-card">
+				<p class="eyebrow">Expertise</p>
+				<h2 class="section-title">Areas of practice</h2>
+				<ul class="clean-list">
+					<li>
+						<strong>Systems and low-level programming:</strong> C, memory management,
+						and performance thinking.
+					</li>
+					<li>
+						<strong>Frontend engineering:</strong> React, TypeScript, and maintainable
+						UI architecture.
+					</li>
+					<li>
+						<strong>Software design:</strong> Building systems that stay readable and
+						reliable as they grow.
+					</li>
+				</ul>
+			</section>
+			<section class="surface-card info-card">
+				<p class="eyebrow">Philosophy</p>
+				<h2 class="section-title">Why this blog exists</h2>
+				<p>
+					The idea behind The Calm Developer is simple: write code that is easy to
+					read, simple to maintain, and grounded in real engineering tradeoffs.
+				</p>
+				<p>
+					This site is where I share what I am learning as I dig deeper into the
+					machine, the principles underneath the abstractions, and the craft of
+					software that lasts.
+				</p>
+			</section>
+		</div>
+	</div>
 </BaseLayout>
-
-<style>
-	section {
-		margin-bottom: 3rem;
-	}
-
-	h2 {
-		border-bottom: 1px solid var(--border);
-		padding-bottom: 0.5rem;
-		margin-top: 3rem;
-	}
-
-	ul {
-		list-style-type: none;
-		padding-left: 0;
-	}
-
-	ul li {
-		margin-bottom: 0.75rem;
-		position: relative;
-		padding-left: 1.5rem;
-	}
-
-	ul li::before {
-		content: "→";
-		position: absolute;
-		left: 0;
-		color: var(--link);
-	}
-</style>

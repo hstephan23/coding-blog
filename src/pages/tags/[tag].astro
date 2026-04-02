@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts } from '../../utils/posts';
+import { getPublishedPosts, getReadingTime } from '../../utils/posts';
 import {
 	collectTagSlugsFromPosts,
 	displayTagForSlug,
@@ -25,40 +25,52 @@ const posts = await getPublishedPosts();
 const label = displayTagForSlug(tag, posts);
 const taggedPosts = postsForTagSlug(tag, posts);
 const path = `/tags/${tag}/`;
+const postCountLabel =
+	taggedPosts.length === 1 ? '1 post filed here.' : `${taggedPosts.length} posts filed here.`;
 ---
 
 <BaseLayout
 	title={`Tag: ${label}`}
-	description={`Posts tagged “${label}”.`}
+	description={`Posts tagged "${label}".`}
 	canonicalPath={path}
 >
 	<div class="site-inner">
-		<h1 class="page-heading">
-			Tag: <span class="tag-label">{label}</span>
-		</h1>
-		<p class="back">
-			<a href="/tags/">All tags</a>
-		</p>
+		<section class="page-intro surface-card">
+			<p class="eyebrow">Topic archive</p>
+			<h1 class="page-heading">Tag: {label}</h1>
+			<p class="page-subtitle">{postCountLabel}</p>
+			<a class="back-link" href="/tags/">All tags</a>
+		</section>
 		{
 			taggedPosts.length === 0 ? (
-				<p>No posts with this tag.</p>
+				<div class="surface-card empty-state">
+					<p>No posts with this tag yet.</p>
+				</div>
 			) : (
 				<ul class="post-list">
 					{taggedPosts.map((post) => (
 						<li>
-							<h2>
-								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-							</h2>
-							<p class="post-meta">
-								<time datetime={post.data.pubDate.toISOString()}>
-									{post.data.pubDate.toLocaleDateString('en-US', {
-										year: 'numeric',
-										month: 'long',
-										day: 'numeric',
-									})}
-								</time>
-							</p>
-							<p class="post-excerpt">{post.data.description}</p>
+							<div class="post-card-top">
+								<p class="post-meta">
+									<time datetime={post.data.pubDate.toISOString()}>
+										{post.data.pubDate.toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}
+									</time>
+									<span>{getReadingTime(post.body || '')}</span>
+								</p>
+							</div>
+							<div class="post-card-body">
+								<h2>
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h2>
+								<p class="post-excerpt">{post.data.description}</p>
+							</div>
+							<div class="post-card-footer">
+								<a class="text-link" href={`/blog/${post.id}/`}>Read article</a>
+							</div>
 						</li>
 					))}
 				</ul>
@@ -66,25 +78,3 @@ const path = `/tags/${tag}/`;
 		}
 	</div>
 </BaseLayout>
-
-<style>
-	.page-heading {
-		margin: 0 0 0.5rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-	.tag-label {
-		font-weight: 600;
-	}
-	.back {
-		margin: 0 0 1.5rem;
-	}
-	.post-meta {
-		margin: 0.25rem 0;
-		color: var(--muted, #666);
-		font-size: 0.9rem;
-	}
-	.post-excerpt {
-		margin: 0.5rem 0 0;
-	}
-</style>

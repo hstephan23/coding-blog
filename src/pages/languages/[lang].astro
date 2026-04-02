@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts } from '../../utils/posts';
+import { getPublishedPosts, getReadingTime } from '../../utils/posts';
 import {
 	collectLanguageSlugsFromPosts,
 	displayLanguageForSlug,
@@ -25,6 +25,8 @@ const posts = await getPublishedPosts();
 const label = displayLanguageForSlug(lang, posts);
 const languagePosts = postsForLanguageSlug(lang, posts);
 const path = `/languages/${lang}/`;
+const postCountLabel =
+	languagePosts.length === 1 ? '1 post filed here.' : `${languagePosts.length} posts filed here.`;
 ---
 
 <BaseLayout
@@ -33,32 +35,42 @@ const path = `/languages/${lang}/`;
 	canonicalPath={path}
 >
 	<div class="site-inner">
-		<h1 class="page-heading">
-			Language: <span class="language-label">{label}</span>
-		</h1>
-		<p class="back">
-			<a href="/languages/">All languages</a>
-		</p>
+		<section class="page-intro surface-card">
+			<p class="eyebrow">Language archive</p>
+			<h1 class="page-heading">Language: {label}</h1>
+			<p class="page-subtitle">{postCountLabel}</p>
+			<a class="back-link" href="/languages/">All languages</a>
+		</section>
 		{
 			languagePosts.length === 0 ? (
-				<p>No posts for this language.</p>
+				<div class="surface-card empty-state">
+					<p>No posts for this language yet.</p>
+				</div>
 			) : (
 				<ul class="post-list">
 					{languagePosts.map((post) => (
 						<li>
-							<h2>
-								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-							</h2>
-							<p class="post-meta">
-								<time datetime={post.data.pubDate.toISOString()}>
-									{post.data.pubDate.toLocaleDateString('en-US', {
-										year: 'numeric',
-										month: 'long',
-										day: 'numeric',
-									})}
-								</time>
-							</p>
-							<p class="post-excerpt">{post.data.description}</p>
+							<div class="post-card-top">
+								<p class="post-meta">
+									<time datetime={post.data.pubDate.toISOString()}>
+										{post.data.pubDate.toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric',
+										})}
+									</time>
+									<span>{getReadingTime(post.body || '')}</span>
+								</p>
+							</div>
+							<div class="post-card-body">
+								<h2>
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h2>
+								<p class="post-excerpt">{post.data.description}</p>
+							</div>
+							<div class="post-card-footer">
+								<a class="text-link" href={`/blog/${post.id}/`}>Read article</a>
+							</div>
 						</li>
 					))}
 				</ul>
@@ -66,25 +78,3 @@ const path = `/languages/${lang}/`;
 		}
 	</div>
 </BaseLayout>
-
-<style>
-	.page-heading {
-		margin: 0 0 0.5rem;
-		font-size: 1.5rem;
-		font-weight: 700;
-	}
-	.language-label {
-		font-weight: 600;
-	}
-	.back {
-		margin: 0 0 1.5rem;
-	}
-	.post-meta {
-		margin: 0.25rem 0;
-		color: var(--muted, #666);
-		font-size: 0.9rem;
-	}
-	.post-excerpt {
-		margin: 0.5rem 0 0;
-	}
-</style>

@@ -41,6 +41,15 @@ if (image != null) {
 
 const rssHref = new URL('/rss.xml', site).pathname;
 const currentPath = Astro.url.pathname;
+const currentYear = new Date().getFullYear();
+const navItems = [
+	{ href: '/', label: 'Posts' },
+	{ href: '/about/', label: 'About' },
+	{ href: '/tags/', label: 'Tags' },
+	{ href: '/languages/', label: 'Languages' },
+	{ href: '/search/', label: 'Search' },
+	{ href: rssHref, label: 'RSS' },
+];
 
 function isCurrent(path: string) {
 	if (path === '/') {
@@ -87,39 +96,53 @@ function isCurrent(path: string) {
 		}
 		<link rel="alternate" type="application/rss+xml" title="RSS" href={rssHref} />
 	</head>
-	<body>
+	<body class={currentPath === '/' ? 'home-page' : 'inner-page'}>
 		<a class="skip-link" href="#main-content">Skip to content</a>
 		<header class="site-header">
-			<div class="site-inner">
-				<p class="site-title">
-					<a href="/">The Calm Developer</a>
-				</p>
+			<div class="site-inner site-frame">
+				<div class="site-brand">
+					<p class="site-kicker">Systems notes from the metal up</p>
+					<p class="site-title">
+						<a href="/">The Calm Developer</a>
+					</p>
+				</div>
 				<nav class="site-nav" aria-label="Main">
-					<a href="/" class={isCurrent('/') ? 'active' : ''}>Posts</a>
-					{' · '}
-					<a href="/about/" class={isCurrent('/about/') ? 'active' : ''}>About</a>
-					{' · '}
-					<a href="/tags/" class={isCurrent('/tags/') ? 'active' : ''}>Tags</a>
-					{' · '}
-					<a
-						href="/languages/"
-						class={isCurrent('/languages/') ? 'active' : ''}>Languages</a
-					>
-					{' · '}
-					<a href="/search/" class={isCurrent('/search/') ? 'active' : ''}
-						>Search</a
-					>
-					{' · '}
-					<a href={rssHref}>RSS</a>
+					<ul class="site-nav-list">
+						{
+							navItems.map(({ href, label }) => (
+								<li>
+									<a
+										href={href}
+										class={isCurrent(href) ? 'active' : ''}
+										aria-current={isCurrent(href) ? 'page' : undefined}
+									>
+										{label}
+									</a>
+								</li>
+							))
+						}
+					</ul>
 				</nav>
 			</div>
 		</header>
-		<main id="main-content">
+		<main id="main-content" data-pagefind-body>
 			<slot />
 		</main>
 		<footer class="site-footer">
-			<div class="site-inner">
-				The Calm Developer · <a href={rssHref}>Subscribe via RSS</a>
+			<div class="site-inner site-footer-frame">
+				<div>
+					<p class="footer-title">The Calm Developer</p>
+					<p class="footer-copy">
+						Thoughtful writing on systems, frontend craft, and the shape of good
+						software.
+					</p>
+				</div>
+				<div class="footer-meta">
+					<p>&copy; {currentYear}</p>
+					<p>
+						<a href={rssHref}>Subscribe via RSS</a>
+					</p>
+				</div>
 			</div>
 		</footer>
 	</body>
