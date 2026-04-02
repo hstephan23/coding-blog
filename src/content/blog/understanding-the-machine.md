@@ -14,7 +14,7 @@ image: ../images/understanding-the-machine.png
 
 I have made a major shift in my coding approach, follow along to see why. 
 
-### Why I'm Choosing to Understand the Machine
+# Why I'm Choosing to Understand the Machine
 
 For most of my career, I've been building software at a high level. 
 
@@ -27,7 +27,7 @@ From the outside, everything seemed to be working.
 
 But underneath, and inside me, something felt... incomplete. 
 
-### The Problem with "Just Making It Work"
+## The Problem with "Just Making It Work"
 
 At some point, I realized I didn't actually understand what my code was _doing_. 
 
@@ -44,7 +44,7 @@ This really bothered me.
 
 I was drowning and didn't really even know it. 
 
-### Slowing Down to Go Deeper
+## Slowing Down to Go Deeper
 
 It was about this time that my company had me switch projects to C. 
 
@@ -65,7 +65,7 @@ gains and progress in my understanding of the machine.
 
 I truly started learning what it means to be a developer and engineer. 
 
-### What I am Chasing
+## What I am Chasing
 
 I'm working on building a deeper mental model of how software works and how coding 
 at its roots works.
@@ -81,7 +81,7 @@ about software.
 
 Even at higher levels.
 
-### What this Blog is About
+## What this Blog is About
 
 This blog is about documenting and continuing the journey. 
 
@@ -96,7 +96,7 @@ You'll find:
 
 The goal is to make things clear—not complicated. 
 
-#### The Calm Developer 
+### The Calm Developer 
 
 I believe good software isn't just about features or speed. 
 
