@@ -1,7 +1,7 @@
 ---
 title: "What C Taught Me About Dependencies"
 description: Moving from npm install to manual linking changed how I think about what belongs in my software.
-draft: true
+draft: false
 pubDate: 2026-04-03
 tags:
   - C
