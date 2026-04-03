@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import { absoluteUrl } from '../utils/absoluteUrl';
+import { getSiteUrl, getDefaultOgPath, getGiscusConfig } from '../utils/config';
 import { slugifyLanguage } from '../utils/languages';
 import { slugifyTag } from '../utils/tags';
 import { getReadingTime, getRelatedPosts, getPublishedPosts } from '../utils/posts';
@@ -22,11 +23,9 @@ const dateLabel = pubDate.toLocaleDateString('en-US', {
 });
 const readingTime = getReadingTime(post.body || '');
 const path = `/blog/${post.id}/`;
-const site = Astro.site ?? new URL('https://example.com');
+const site = getSiteUrl(Astro.site);
 const postUrl = new URL(path, site).href;
-const defaultOgPath =
-	(import.meta.env.PUBLIC_OG_IMAGE as string | undefined)?.trim() ||
-	'/apple-touch-icon.png';
+const defaultOgPath = getDefaultOgPath();
 
 let schemaImage: string;
 if (image) {
@@ -49,17 +48,7 @@ const jsonLd = {
 	image: schemaImage,
 };
 
-const giscusRepo = import.meta.env.PUBLIC_GISCUS_REPO as string | undefined;
-const giscusRepoId = import.meta.env.PUBLIC_GISCUS_REPO_ID as string | undefined;
-const giscusCategoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID as
-	| string
-	| undefined;
-const giscusCategory =
-	(import.meta.env.PUBLIC_GISCUS_CATEGORY as string | undefined) ?? 'Comments';
-const showGiscus =
-	Boolean(giscusRepo) &&
-	Boolean(giscusRepoId) &&
-	Boolean(giscusCategoryId);
+const giscus = getGiscusConfig();
 ---
 
 <BaseLayout
@@ -138,16 +127,16 @@ const showGiscus =
 			) : null
 		}
 		{
-			showGiscus ? (
+			giscus.enabled ? (
 				<section class="giscus" aria-label="Comments">
 					<h2 class="giscus-heading">Comments</h2>
 					<script
 						is:inline
 						src="https://giscus.app/client.js"
-						data-repo={giscusRepo}
-						data-repo-id={giscusRepoId}
-						data-category={giscusCategory}
-						data-category-id={giscusCategoryId}
+						data-repo={giscus.repo}
+						data-repo-id={giscus.repoId}
+						data-category={giscus.category}
+						data-category-id={giscus.categoryId}
 						data-mapping="pathname"
 						data-strict="0"
 						data-reactions-enabled="1"

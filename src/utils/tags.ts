@@ -9,10 +9,6 @@ export function slugifyTag(tag: string): string {
 		.replace(/[^a-z0-9-]/g, '');
 }
 
-export function tagMatchesSlug(slug: string, tag: string): boolean {
-	return slugifyTag(tag) === slug.toLowerCase();
-}
-
 export function collectTagSlugsFromPosts(
 	posts: CollectionEntry<'blog'>[],
 ): string[] {

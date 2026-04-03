@@ -225,7 +225,6 @@ ol {
 }
 
 .site-nav a:hover,
-.site-nav a.active,
 .site-nav a[aria-current='page'] {
 	color: var(--text);
 	background: var(--accent-soft);
@@ -579,7 +578,6 @@ body.home-page main {
 }
 
 .post-languages,
-.pill-list,
 .prose .tags {
 	display: flex;
 	flex-wrap: wrap;
@@ -589,13 +587,11 @@ body.home-page main {
 }
 
 .post-languages li,
-.pill-list li,
 .prose .tags li {
 	display: flex;
 }
 
 .post-languages a,
-.pill-list a,
 .prose .tags li {
 	display: inline-flex;
 	align-items: center;
@@ -609,7 +605,6 @@ body.home-page main {
 }
 
 .post-languages a:hover,
-.pill-list a:hover,
 .prose .tags li:hover {
 	border-color: var(--line-strong);
 	background: var(--accent-soft);

@@ -4,10 +4,6 @@ import { slugifyTag } from './tags';
 /** URL-safe slug for language routes (same rules as tags). */
 export const slugifyLanguage = slugifyTag;
 
-export function languageMatchesSlug(slug: string, label: string): boolean {
-	return slugifyLanguage(label) === slug.toLowerCase();
-}
-
 export function collectLanguageSlugsFromPosts(
 	posts: CollectionEntry<'blog'>[],
 ): string[] {

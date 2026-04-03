@@ -2,6 +2,7 @@
 import type { ImageMetadata } from 'astro';
 import '../styles/global.css';
 import { absoluteUrl } from '../utils/absoluteUrl';
+import { getSiteUrl, getDefaultOgPath } from '../utils/config';
 
 interface Props {
 	title: string;
@@ -21,12 +22,10 @@ const {
 	ogType = 'website',
 	jsonLd,
 } = Astro.props;
-const site = Astro.site ?? new URL('https://example.com');
+const site = getSiteUrl(Astro.site);
 const canonical =
 	canonicalPath != null ? new URL(canonicalPath, site).href : undefined;
-const defaultOgPath =
-	(import.meta.env.PUBLIC_OG_IMAGE as string | undefined)?.trim() ||
-	'/apple-touch-icon.png';
+const defaultOgPath = getDefaultOgPath();
 
 let ogImage: string;
 if (image != null) {
@@ -96,7 +95,7 @@ function isCurrent(path: string) {
 		}
 		<link rel="alternate" type="application/rss+xml" title="RSS" href={rssHref} />
 	</head>
-	<body class={currentPath === '/' ? 'home-page' : 'inner-page'}>
+	<body class={currentPath === '/' ? 'home-page' : undefined}>
 		<a class="skip-link" href="#main-content">Skip to content</a>
 		<header class="site-header">
 			<div class="site-inner site-frame">
@@ -113,7 +112,6 @@ function isCurrent(path: string) {
 								<li>
 									<a
 										href={href}
-										class={isCurrent(href) ? 'active' : ''}
 										aria-current={isCurrent(href) ? 'page' : undefined}
 									>
 										{label}
